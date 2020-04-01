@@ -1,0 +1,157 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.0.0"
+    }
+}
+
+def STRING = 'String'
+def BUILD_TIME = 'BUILD_TIME'
+
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.google.com' }
+}
+
+
+
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.demo.weatherinfo"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 2
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField STRING, BUILD_TIME, "\"${rootProject.ext.buildTime}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled false
+        }
+
+        debug {
+            ext.enableCrashlytics = false
+            testCoverageEnabled true
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    androidExtensions {
+        experimental = true
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.supportv4
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.recyclerView
+    implementation rootProject.ext.cardView
+    implementation rootProject.ext.coreKtx
+    implementation rootProject.ext.timber
+
+    implementation rootProject.ext.dagger
+    implementation rootProject.ext.daggerSupport
+    kapt rootProject.ext.daggerApt
+    kapt rootProject.ext.daggerAnnotation
+    implementation rootProject.ext.rxJava
+    implementation rootProject.ext.rxKotlin
+    implementation rootProject.ext.rxAndroid
+    implementation rootProject.ext.rxPermission
+
+
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.okHttp
+    implementation rootProject.ext.retrofitAdapter
+    implementation rootProject.ext.retrofitJson
+
+    implementation rootProject.ext.rxJavaAdapter
+    implementation rootProject.ext.picasso
+    implementation rootProject.ext.lifecycleExt
+    kapt rootProject.ext.lifecycleAnnotation
+    implementation rootProject.ext.liveDataKtx
+    implementation rootProject.ext.lifecycleViewModelKtx
+
+    kapt rootProject.ext.dataBindingCompilerKapt
+    annotationProcessor rootProject.ext.dataBindingCompilerAnnotation
+    implementation rootProject.ext.stethoCore
+    implementation rootProject.ext.stethoOkHttp
+    implementation rootProject.ext.stethoUrlConnection
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ktlint {
+    debug = true
+    verbose = true
+    android = false
+    outputToConsole = true
+    ignoreFailures = true
+    enableExperimentalRules = true
+    additionalEditorconfigFile = file("/some/additional/.editorconfig")
+    kotlinScriptAdditionalPaths {
+        include fileTree("scripts/")
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
+task runUnitTests(dependsOn: [':app:testDebugUnitTest']) {
+    description 'Run all unit tests'
+}
+
+
+
