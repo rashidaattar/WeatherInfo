@@ -1,11 +1,10 @@
-package com.faskn.app.weatherapp.domain.model
+package com.demo.weatherinfo.data.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
+
 data class SearchResponse(
 
-    @Json(name = "hits")
+    @SerializedName("hits")
     val hits: List<HitsItem?>? = null
 )

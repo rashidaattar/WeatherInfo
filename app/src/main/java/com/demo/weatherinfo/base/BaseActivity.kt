@@ -45,6 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         initViewModel(viewModel)
         onInject()
         setupBindingLifecycleOwner()
+        observeViewModelData()
     }
 
     /**
@@ -59,4 +60,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     private fun setupBindingLifecycleOwner() {
         binding.lifecycleOwner = this
     }
+
+    abstract fun observeViewModelData()
 }

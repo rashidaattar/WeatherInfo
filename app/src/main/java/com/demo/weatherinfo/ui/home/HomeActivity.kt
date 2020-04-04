@@ -1,16 +1,21 @@
 package com.demo.weatherinfo.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.demo.weatherinfo.R
 import com.demo.weatherinfo.base.BaseActivity
 import com.demo.weatherinfo.databinding.ActivityHomeBinding
+import com.demo.weatherinfo.ui.current.CurrentWeatherActivity
+import com.demo.weatherinfo.ui.forecast.ForeCastActivity
 import com.demo.weatherinfo.vm.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -40,7 +45,23 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
         viewModel.permissionLiveData.observe(this, Observer { granted ->
             if (granted) {
                 getLastKnownLocation()
+            } else {
+                //show dialog here
             }
+        })
+
+        observeViewModelData()
+    }
+
+    override fun observeViewModelData() {
+        viewModel.getCities.observe(this, Observer {
+            val intent = Intent(this, CurrentWeatherActivity::class.java)
+            intent.putExtra("cityList", it)
+            startActivity(intent)
+        })
+
+        viewModel.errorLiveData.observe(this, Observer {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
     }
 
@@ -55,7 +76,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
             ?.addOnSuccessListener { location ->
                 // use your location object
                 // get latitude , longitude and other info from this
-                viewModel.getCityFromLatLong(location)
+                Timber.d("latitude : $location.latitude")
+                val intent = Intent(this, ForeCastActivity::class.java)
+                intent.putExtra("location", location)
+                startActivity(intent)
             }
 
     }

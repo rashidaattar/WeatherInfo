@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.demo.weatherinfo.di.ViewModelFactory
 import com.demo.weatherinfo.di.key.ViewModelKey
+import com.demo.weatherinfo.vm.CurrentWeatherViewModel
+import com.demo.weatherinfo.vm.ForeCastViewModel
 import com.demo.weatherinfo.vm.HomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -24,5 +26,15 @@ abstract class ViewModelModule {
     @IntoMap
     @Binds
     @ViewModelKey(HomeViewModel::class)
-    abstract fun provideSplashFragmentViewModel(homeViewModel: HomeViewModel): ViewModel
+    abstract fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(CurrentWeatherViewModel::class)
+    abstract fun provideCurrentWeatherViewModel(currentWeatherViewModel: CurrentWeatherViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(ForeCastViewModel::class)
+    abstract fun provideForeCastViewModel(foreCastViewModel: ForeCastViewModel): ViewModel
 }

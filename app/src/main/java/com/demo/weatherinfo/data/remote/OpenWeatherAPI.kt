@@ -1,6 +1,8 @@
 package com.demo.weatherinfo.data.remote
 
 import com.demo.weatherinfo.data.model.ForecastResponse
+import com.demo.weatherinfo.data.model.ListItem
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,5 +23,12 @@ interface OpenWeatherAPI {
         @Query("units")
         units: String
     ):Single<ForecastResponse>
+
+
+    @GET("weather")
+    fun getWeatherPerCity(
+        @Query("q")
+        city: String
+    ):Observable<ListItem>
 
 }

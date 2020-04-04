@@ -2,17 +2,23 @@ package com.demo.weatherinfo.vm
 
 import android.Manifest
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.demo.weatherinfo.base.BaseViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.demo.weatherinfo.data.model.ForecastResponse
+import com.demo.weatherinfo.data.model.ListItem
+import com.demo.weatherinfo.data.remote.NetworkBoundResource
+import com.demo.weatherinfo.data.remote.OpenWeatherAPI
+import com.demo.weatherinfo.data.remote.Resource
+import com.demo.weatherinfo.ui.current.CurrentWeatherActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -22,10 +28,16 @@ import javax.inject.Inject
  *
  */
 
-class HomeViewModel @Inject constructor(var context: Context) : BaseViewModel() {
+class HomeViewModel @Inject constructor(var context: Context, var weatherAPI: OpenWeatherAPI) :
+    BaseViewModel() {
 
     var permissionDisposable: Disposable? = null
     var permissionLiveData = MutableLiveData<Boolean>()
+    var cityNames = ObservableField<String>()
+    var cityWeatherLiveData = MutableLiveData<List<ListItem>>()
+    var errorLiveData = MutableLiveData<String>()
+    var getCities = MutableLiveData<ArrayList<String>>()
+
 
     fun requestForPermission() {
         permissionDisposable?.dispose() //removing any previous instace of permissions data
@@ -40,24 +52,24 @@ class HomeViewModel @Inject constructor(var context: Context) : BaseViewModel() 
                     //get location
                     permissionLiveData.postValue(true)
                 } else if (permission.shouldShowRequestPermissionRationale) {
-                    //
+                    errorLiveData.postValue("Location permission is required to see current weather")
                 } else {
-                    //
+                    permissionLiveData.postValue(false)
                 }
             }
     }
 
-    fun getCityFromLatLong(location: Location?){
-        // Got last known location. In some rare situations this can be null.
-        location?.let {
-            val gcd = Geocoder(context, Locale.getDefault())
-            val addresses: List<Address> =
-                gcd.getFromLocation(it.latitude, it.longitude, 1)
-            if (addresses.size > 0) {
-                System.out.println("city here :" + addresses[0].getLocality())
+    fun cityButtonClicked() {
+        Timber.d("Button clicked ${cityNames.get()}")
+        val cities = cityNames.get()?.trim()?.split(",")
+        cities?.let {
+            if (cities.size > 7 || cities.size < 3) {
+                errorLiveData.postValue("MAX 7 cities and MIN 3 cities required")
+            } else {
+                getCities.postValue(cities as ArrayList<String>)
             }
-
-        }}
-
+        }
+    }
 
 }
+

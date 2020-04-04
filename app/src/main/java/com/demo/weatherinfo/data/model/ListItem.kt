@@ -38,7 +38,10 @@ data class ListItem(
     val sys: Sys?,
 
     @SerializedName("wind")
-    val wind: Wind?
+    val wind: Wind?,
+
+    @SerializedName("name")
+    val name: String?
 ) {
     fun getWeatherItem(): WeatherItem? {
         return weather?.first()

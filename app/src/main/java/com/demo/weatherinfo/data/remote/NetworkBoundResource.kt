@@ -15,6 +15,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * abstract method which is helper class to call api
+ */
 abstract class NetworkBoundResource<RequestType>
 @MainThread internal constructor() {
     private val result = MediatorLiveData<Resource<RequestType>>()
@@ -22,6 +25,10 @@ abstract class NetworkBoundResource<RequestType>
 
     internal val asLiveData: LiveData<Resource<RequestType>>
         get() = result
+
+    init {
+        fetchFromNetwork()
+    }
 
     private fun fetchFromNetwork() {
         createCall()
@@ -39,7 +46,6 @@ abstract class NetworkBoundResource<RequestType>
                 }
 
                 override fun onError(e: Throwable) {
-                    onFetchFailed()
                     result.setValue(Resource.error(e.message.toString(), null))
                     mDisposable!!.dispose()
                 }
@@ -50,6 +56,4 @@ abstract class NetworkBoundResource<RequestType>
     @MainThread
     protected abstract fun createCall(): Single<RequestType>
 
-    @MainThread
-    protected abstract fun onFetchFailed()
 }

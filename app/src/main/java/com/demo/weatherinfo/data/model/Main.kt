@@ -39,10 +39,10 @@ data class Main(
     }
 
     fun getTempMinString(): String {
-        return tempMin.toString().substringBefore(".") + "°"
+        return "Minimum Temp " + tempMin.toString().substringBefore(".") + "°"
     }
 
     fun getTempMaxString(): String {
-        return tempMax.toString().substringBefore(".") + "°"
+        return "Maximum temp " + tempMax.toString().substringBefore(".") + "°"
     }
 }
