@@ -12,5 +12,5 @@ data class Wind(
     @SerializedName("speed")
     val speed: Double?
 ) {
-    fun getWindSpeed(): String = "Wind speed : $speed"
+    fun getWindSpeed(): String = "Wind : $speed"
 }

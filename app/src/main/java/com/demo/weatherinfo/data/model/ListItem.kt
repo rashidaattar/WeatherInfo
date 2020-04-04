@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 
@@ -101,5 +102,10 @@ data class ListItem(
 
     fun getHourOfDay(): String {
         return dtTxt?.substringAfter(" ")?.substringBeforeLast(":") ?: "00:00"
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDayofWeek(): DayOfWeek {
+        return LocalDate.parse(dtTxt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).dayOfWeek
     }
 }

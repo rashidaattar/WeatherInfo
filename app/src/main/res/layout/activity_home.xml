@@ -14,10 +14,11 @@
 
         <EditText
             android:id="@+id/city_name_edittext"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Add city names separated with ,"
             android:text="@={viewModel.cityNames}"
+            android:inputType="text"
             />
         <Button
             android:layout_width="wrap_content"
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="GET CURRENT LOCATION"
+            android:text="GET WEATHER FOR CURRENT LOCATION"
             android:onClick="@{() ->viewModel.requestForPermission()}"/>
 
 

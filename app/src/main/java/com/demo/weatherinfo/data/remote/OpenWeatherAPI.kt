@@ -28,7 +28,9 @@ interface OpenWeatherAPI {
     @GET("weather")
     fun getWeatherPerCity(
         @Query("q")
-        city: String
+        city: String,
+        @Query("units")
+        units: String = "metric"
     ):Observable<ListItem>
 
 }

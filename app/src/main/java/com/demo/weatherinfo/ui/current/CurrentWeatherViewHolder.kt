@@ -1,6 +1,7 @@
 package com.demo.weatherinfo.ui.current
 
 import androidx.recyclerview.widget.RecyclerView
+import com.demo.weatherinfo.base.BaseViewHolder
 import com.demo.weatherinfo.data.model.ListItem
 import com.demo.weatherinfo.databinding.CityWeatherItemBinding
 
@@ -10,7 +11,7 @@ import com.demo.weatherinfo.databinding.CityWeatherItemBinding
  *
  */
 class CurrentWeatherViewHolder(itemsListBinding: CityWeatherItemBinding) :
-    RecyclerView.ViewHolder(itemsListBinding.getRoot()) {
+   BaseViewHolder<CityWeatherItemBinding>(itemsListBinding) {
     var itemsListBinding: CityWeatherItemBinding
 
     init {
