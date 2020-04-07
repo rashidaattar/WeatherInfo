@@ -3,9 +3,9 @@ Demo weather app for practice purpose.
 WeatherInfo is a simple forecast app, which uses some APIs to fetch 5 day / 3 hour forecast data from the [OpenWeatherMap](https://openweathermap.org/forecast5)
 
 ## Sample Output
-<p><img height= "200" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029197.png" alt="Screen1" />
-<img height= "200" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029230.png" alt="Screen2" />
-<img height= "200" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029240.png" alt="Screen3" />
+<p><img height= "400" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029197.png" alt="Screen1" />
+<img height= "400" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029230.png" alt="Screen2" />
+<img height= "400" src="https://github.com/rashidaattar/WeatherInfo/blob/master/screenshot/Screenshot_1586029240.png" alt="Screen3" />
 
 ## Libraries and tools 🛠
 <li><a href="https://developer.android.com/topic/libraries/architecture/viewmodel">ViewModel</a></li>
