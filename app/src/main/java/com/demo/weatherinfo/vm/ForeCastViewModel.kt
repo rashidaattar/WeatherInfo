@@ -42,7 +42,7 @@ class ForeCastViewModel @Inject constructor(var weatherAPI: OpenWeatherAPI) : Ba
     fun getListForAdapter(list: List<ListItem>) {
         if (list.size > 0) {
             val items = list as List<ListItem>
-            var finalList = arrayListOf<DayTimeModel>()
+            val finalList = arrayListOf<DayTimeModel>()
             var itemsListDayWise = arrayListOf<ListItem>()
             for (item in items) {
                 if (items.indexOf(item) == 0)

@@ -77,9 +77,12 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                 // use your location object
                 // get latitude , longitude and other info from this
                 Timber.d("latitude : $location.latitude")
-                val intent = Intent(this, ForeCastActivity::class.java)
-                intent.putExtra("location", location)
-                startActivity(intent)
+                location?.let {
+                    val intent = Intent(this, ForeCastActivity::class.java)
+                    intent.putExtra("location", it)
+                    startActivity(intent)
+                }?:Toast.makeText(this,"Cannot get location",Toast.LENGTH_SHORT).show()
+
             }
 
     }

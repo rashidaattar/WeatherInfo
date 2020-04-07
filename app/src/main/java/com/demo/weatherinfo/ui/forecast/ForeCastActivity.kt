@@ -9,11 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.weatherinfo.R
 import com.demo.weatherinfo.base.BaseActivity
+import com.demo.weatherinfo.data.remote.Resource
+import com.demo.weatherinfo.data.remote.Status
 import com.demo.weatherinfo.databinding.ActivityForecastBinding
 import com.demo.weatherinfo.vm.ForeCastViewModel
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import kotlinx.android.synthetic.main.activity_forecast.*
 import javax.inject.Inject
 
 
@@ -48,10 +51,17 @@ class ForeCastActivity :
             viewModel.loadCurrentWeatherByGeoCords(location.latitude, location.longitude, "metric")
                 .observe(this,
                     Observer { data ->
-                        supportActionBar?.title = data.data?.city?.name
-                        data.data?.list?.let {
-                            viewModel.getListForAdapter(it)
+                        when(data.status){
+                            Status.LOADING ->  binding.progressBar.visibility = View.VISIBLE
+                            Status.SUCCESS -> {
+                                supportActionBar?.title = data.data?.city?.name
+                                data.data?.list?.let {
+                                    viewModel.getListForAdapter(it)
+                                }
+                            }
+                            Status.ERROR -> binding.progressBar.visibility = View.GONE
                         }
+
                     })
         }
     }

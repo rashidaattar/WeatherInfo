@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply from: 'buildscript/jacoco.gradle'
+
 
 buildscript {
     repositories {
@@ -119,13 +121,15 @@ dependencies {
     implementation rootProject.ext.stethoUrlConnection
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "com.google.android.gms:play-services-location:17.0.0"
+    implementation rootProject.ext.locationService
 
 
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation rootProject.ext.mockk
+    testImplementation 'android.arch.core:core-testing:1.1.1'
 }
 
 repositories {

@@ -3,21 +3,10 @@ package com.demo.weatherinfo.vm
 import android.Manifest
 import android.content.Context
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.demo.weatherinfo.base.BaseViewModel
-import com.demo.weatherinfo.data.model.ForecastResponse
-import com.demo.weatherinfo.data.model.ListItem
-import com.demo.weatherinfo.data.remote.NetworkBoundResource
-import com.demo.weatherinfo.data.remote.OpenWeatherAPI
-import com.demo.weatherinfo.data.remote.Resource
-import com.demo.weatherinfo.ui.current.CurrentWeatherActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -28,13 +17,12 @@ import javax.inject.Inject
  *
  */
 
-class HomeViewModel @Inject constructor(var context: Context, var weatherAPI: OpenWeatherAPI) :
+class HomeViewModel @Inject constructor(var context: Context) :
     BaseViewModel() {
 
     var permissionDisposable: Disposable? = null
     var permissionLiveData = MutableLiveData<Boolean>()
     var cityNames = ObservableField<String>()
-    var cityWeatherLiveData = MutableLiveData<List<ListItem>>()
     var errorLiveData = MutableLiveData<String>()
     var getCities = MutableLiveData<ArrayList<String>>()
 
@@ -63,7 +51,7 @@ class HomeViewModel @Inject constructor(var context: Context, var weatherAPI: Op
         Timber.d("Button clicked ${cityNames.get()}")
         val cities = cityNames.get()?.trim()?.split(",")
         cities?.let {
-            if (cities.size > 7 || cities.size < 3) {
+            if (it.size > 7 || it.size < 3) {
                 errorLiveData.postValue("MAX 7 cities and MIN 3 cities required")
             } else {
                 getCities.postValue(cities as ArrayList<String>)

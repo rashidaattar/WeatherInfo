@@ -31,6 +31,7 @@ abstract class NetworkBoundResource<RequestType>
     }
 
     private fun fetchFromNetwork() {
+        result.setValue(Resource.loading())
         createCall()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

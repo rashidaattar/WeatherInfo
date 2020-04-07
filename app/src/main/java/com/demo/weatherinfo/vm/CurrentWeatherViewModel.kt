@@ -24,7 +24,7 @@ class CurrentWeatherViewModel @Inject constructor(var weatherAPI: OpenWeatherAPI
 
     fun getCurrentWeatherOfCities(cities: List<String>) {
 
-        var observablesList = arrayListOf<Observable<ListItem>>()
+        val observablesList = arrayListOf<Observable<ListItem>>()
         if (cities.size > 0) {
             for (city in cities) {
                 observablesList.add(weatherAPI.getWeatherPerCity(city))

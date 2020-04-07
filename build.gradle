@@ -60,12 +60,17 @@ ext {
     lifecycleVersion = '2.2.0'
     dataBindingVersion = '3.6.1'
 
+    mockKVersion = '1.9.3'
+
     //supportLib
     supportv4 = "androidx.legacy:legacy-support-v4:$support_version"
     appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
     recyclerView = "androidx.recyclerview:recyclerview:$support_version"
     cardView = "androidx.cardview:cardview:$support_version"
     coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
+
+    //play service
+    locationService = "com.google.android.gms:play-services-location:17.0.0"
 
     //rx
     rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
@@ -108,6 +113,9 @@ ext {
     stethoCore = "com.facebook.stetho:stetho:$stethoVersion"
     stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
     stethoUrlConnection = "com.facebook.stetho:stetho-urlconnection:$stethoVersion"
+
+    //test
+    mockk = "io.mockk:mockk:$mockKVersion"
 
     buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
 
