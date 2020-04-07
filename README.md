@@ -19,10 +19,17 @@ WeatherInfo is a simple forecast app, which uses some APIs to fetch 5 day / 3 ho
 <li><a href="https://github.com/square/okhttp">OkHttp</a></li>
 <li><a href="https://github.com/facebook/stetho">Stetho</a></li>
 <li>RxPermission</li>
+<li>Mockk</li>
+<li>Jacoco</li>
+
+
+## Code coverage :
+
+run $ gradle testDebugUnitTestCoverage
 
 
 
 ## ToDo
-<li>Unit Testing</li>
-<li>Unit Testing Coverage</li>
+<li>Further Unit Testing</li>
+<li>Instrumentation Test</li>
 <li>Modify UI</li>
